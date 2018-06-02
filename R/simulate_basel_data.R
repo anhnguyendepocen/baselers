@@ -87,6 +87,7 @@ simulate_baselers <- function(nsim = 100, corMat_f = NULL, corMat_m = NULL,
   }
 
 
+  # if matrices are not positive definite, force them to be
   if (!corpcor::is.positive.definite(corMat_f)){
     corMat_f <- corpcor::make.positive.definite(corMat_f, tol=1e-3)
   }

@@ -3,9 +3,9 @@
 #' A tibble containing simulated data of basler inhabitants. Most mean values are based on actual populationstatistics, however correlations between variables aren't.
 #'
 #'
-#' @format A tibble containing 198384 rows and 20 columns
+#' @format A tibble containing 150000 rows and 20 columns
 #' \describe{
-#'   \item{id}{(numeric) - A unique identifier (1 through 198384).}
+#'   \item{id}{(numeric) - A unique identifier (1 through 150000).}
 #'   \item{age}{(numeric) - A peson's age in years.}
 #'   \item{household_income}{(numeric) - Income of the household a person lives in.}
 #'   \item{weight}{(numeric) - A person's weight in kg.}

@@ -162,7 +162,10 @@ simulate_baselers <- function(nsim = 1000,
   tib <- tib[sample(1:nsim),]
 
 
-  id_scramble <- paste0("bas_", sapply(1:nsim, FUN = function(x) {paste(sample(LETTERS, size = 5, replace = TRUE), collapse = "")}))
+  # id_scramble <- paste0("bas_", sapply(1:nsim, FUN = function(x) {paste(sample(LETTERS, size = 5, replace = TRUE), collapse = "")}))
+
+  id_scramble <- 1:nsim
+
 
   tib <- tib %>%
     mutate(id = id_scramble,

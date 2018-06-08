@@ -11,8 +11,8 @@
 #'   \item{weight}{(numeric) - A person's weight in kg.}
 #'   \item{height}{(numeric) - A person's height in cm.}
 #'   \item{children}{(numeric) - The number of children a person has.}
-#'   \item{happiness}{(numeric) - How happy a person is on a scale from 0 to 10.}
-#'   \item{fitness}{(numeric) - A person's fitness level rated from 0 to 10.}
+#'   \item{happiness}{(numeric) - How happy a person is on a scale from 1 to 10.}
+#'   \item{fitness}{(numeric) - A person's fitness level rated from 1 to 10.}
 #'   \item{food}{(numeric) - How much (CHF) a person spends on food per month.}
 #'   \item{alcohol}{(numeric) - How much (CHF) a person spends on alcohol beverages per month.}
 #'   \item{tattoos}{(numeric) - The number of tattoos a person has.}

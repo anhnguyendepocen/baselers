@@ -170,9 +170,15 @@ simulate_baselers <- function(nsim = 1000,
                            TRUE ~ age),
            age = round(age, 0),
 
-
-           weight = round(weight, 1),
            height = round(height, 1),
+
+           # weight
+           weight = round(weight, 1),
+
+           ## make 10% of cases NA
+
+           weight = case_when(runif(nsim) < .15 ~ NA_real_,
+                               TRUE ~ weight),
 
            income = round(income / 100, 0) * 100,
 
@@ -182,8 +188,11 @@ simulate_baselers <- function(nsim = 1000,
            happiness = case_when(happiness > 10 ~ runif(1, 6, 9),
                                  happiness < 5 & runif(1, 0, 1) < .35 ~ runif(1, 6, 9),
                                  TRUE ~ happiness),
+           happiness = case_when(happiness < 1 ~ runif(1, 1, 10),
+                                TRUE ~ happiness),
            happiness = round(happiness),
-           fitness = case_when(fitness < 0 | fitness > 10 ~ runif(1, 0, 10),
+
+           fitness = case_when(fitness < 1 | fitness > 10 ~ runif(1, 1, 10),
                                TRUE ~ fitness),
            fitness = round(fitness),
            food = round(food / 10) * 10,
@@ -220,7 +229,15 @@ simulate_baselers <- function(nsim = 1000,
            consultations = round(consultations),
            hiking = case_when(hiking < 0 ~ 0,
                                           TRUE ~ hiking),
-           hiking = round(hiking)
+           hiking = round(hiking),
+
+           # confession
+           ## make 5% of cases NA
+
+           confession = case_when(runif(nsim) < .15 ~ NA_character_,
+                              TRUE ~ confession)
+
+
            )
 
 

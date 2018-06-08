@@ -31,7 +31,7 @@ simulate_baselers <- function(nsim = 1000,
   # age: https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.assetdetail.3202980.html
   # weight, height: https://www.laenderdaten.info/durchschnittliche-koerpergroessen.php
   # tattoo: https://www.migrosmagazin.ch/tattoos-ohne-grenzen
-  # household_income: https://www.srf.ch/news/schweiz/mit-7100-franken-pro-monat-ueberleben-oder-etwa-doch-weniger
+    # income: https://www.srf.ch/news/schweiz/mit-7100-franken-pro-monat-ueberleben-oder-etwa-doch-weniger
   # consultations: https://www.krankenkasse-vergleich.ch/news/das-schweizer-gesundheitssystem-in-der-oecd-statistik, https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.assetdetail.250255.html
 
   if (!is.null(seed) && is.numeric(seed)){
@@ -39,10 +39,10 @@ simulate_baselers <- function(nsim = 1000,
   }
 
   # continuous variables:
-  # age, household_income (per month), weight (kg), height (cm), children,
-  # happiness (0 to 10), fitness (0 to 10), food_expenses, alcohol_expenses, tattoos,
-  # rhine_swimming (no per month), data_use (no of times phone is checked per day),
-  # consultations, anual_hiking_hours
+  # age, income (per month), weight (kg), height (cm), children,
+  # happiness (0 to 10), fitness (0 to 10), food, alcohol, tattoos,
+  # rhine (no per month), datause (no of times phone is checked per day),
+  # consultations, hiking
 
   # means and sds for females and males
   mu_f <- c(43.14, 7112, 64, 164, 1.54, 6, 5, 438, 25, 3, 4, 88, 4.5, 60)
@@ -109,16 +109,16 @@ simulate_baselers <- function(nsim = 1000,
 
 
   tib_f <- tibble::as_tibble(mat_f)
-  names(tib_f) <- c("age", "household_income", "weight", "height", "children",
-                    "happiness", "fitness", "food_expenses", "alcohol_expenses",
-                    "tattoos", "rhine_swimming", "data_use", "consultations",
-                    "anual_hiking_hours")
+  names(tib_f) <- c("age", "income", "weight", "height", "children",
+                    "happiness", "fitness", "food", "alcohol",
+                    "tattoos", "rhine", "datause", "consultations",
+                    "hiking")
 
   tib_m <- tibble::as_tibble(mat_m)
-  names(tib_m) <- c("age", "household_income", "weight", "height", "children",
-                    "happiness", "fitness", "food_expenses", "alcohol_expenses",
-                    "tattoos", "rhine_swimming", "data_use", "consultations",
-                    "anual_hiking_hours")
+  names(tib_m) <- c("age", "income", "weight", "height", "children",
+                    "happiness", "fitness", "food", "alcohol",
+                    "tattoos", "rhine", "datause", "consultations",
+                    "hiking")
 
   tib_f$sex <- "female"
   tib_m$sex <- "male"
@@ -146,17 +146,17 @@ simulate_baselers <- function(nsim = 1000,
                                       "evangelical-reformed"), size = nrow(tib_m),
                                     replace = TRUE, prob = c(.253, .051, .074, .372, .25)))
 
-  tib_f$fasnacht_active <- sample(c("yes", "no"), size = nrow(tib_f), replace = TRUE,
+  tib_f$fasnacht <- sample(c("yes", "no"), size = nrow(tib_f), replace = TRUE,
                                   prob = c(.02, .98))
-  tib_m$fasnacht_active <- sample(c("yes", "no"), size = nrow(tib_m), replace = TRUE,
+  tib_m$fasnacht <- sample(c("yes", "no"), size = nrow(tib_m), replace = TRUE,
                                   prob = c(.035, .965))
 
   tib <- rbind(tib_f, tib_m)
 
-  tib$alcohol_expenses <- tib$alcohol_expenses + ifelse(tib$fasnacht_active == "yes",
+  tib$alcohol <- tib$alcohol + ifelse(tib$fasnacht == "yes",
                                                         runif(1, 0:40), 0)
 
-  tib$eye_correction <- sample(c("yes", "no"), size = nsim, replace = TRUE,
+  tib$eyecor <- sample(c("yes", "no"), size = nsim, replace = TRUE,
                                prob = c(.66, .37))
 
   tib <- tib[sample(1:nsim),]
@@ -168,13 +168,13 @@ simulate_baselers <- function(nsim = 1000,
     mutate(id = id_scramble,
            age = case_when(age < 18 | age > 105 ~ runif(1, 18, 85),
                            TRUE ~ age),
-           age = round(age, 1),
+           age = round(age, 0),
 
 
            weight = round(weight, 1),
            height = round(height, 1),
 
-           household_income = round(household_income / 100, 0) * 100,
+           income = round(income / 100, 0) * 100,
 
            children = case_when(children < 0 ~ runif(1, 0, 3),
                                    TRUE ~ children),
@@ -186,18 +186,18 @@ simulate_baselers <- function(nsim = 1000,
            fitness = case_when(fitness < 0 | fitness > 10 ~ runif(1, 0, 10),
                                TRUE ~ fitness),
            fitness = round(fitness),
-           food_expenses = round(food_expenses),
+           food = round(food / 10) * 10,
 
            ### alcohol
 
-           alcohol_expenses = case_when(alcohol_expenses < 0 ~ runif(1, 5, 50),
-                                        TRUE ~ alcohol_expenses),
-           alcohol_expenses = round(alcohol_expenses),
+           alcohol = case_when(alcohol < 0 ~ runif(1, 5, 50),
+                                        TRUE ~ alcohol),
+           alcohol = round(alcohol),
 
            ## make 15% of cases 0
 
-           alcohol_expenses = case_when(runif(nsim) < .15 ~ 0,
-                               TRUE ~ alcohol_expenses),
+           alcohol = case_when(runif(nsim) < .15 ~ 0,
+                               TRUE ~ alcohol),
 
            ## Tattoos
 
@@ -211,19 +211,23 @@ simulate_baselers <- function(nsim = 1000,
                                TRUE ~ tattoos),
 
 
-           rhine_swimming = case_when(rhine_swimming < 0 ~ 0,
-                                      TRUE ~ rhine_swimming),
-           rhine_swimming = round(rhine_swimming),
-           data_use = round(data_use),
+           rhine = case_when(rhine < 0 ~ 0,
+                                      TRUE ~ rhine),
+           rhine = round(rhine),
+           datause = round(datause),
            consultations = case_when(consultations < 0 ~ runif(1, 0, 10),
                                         TRUE ~ consultations),
            consultations = round(consultations),
-           anual_hiking_hours = case_when(anual_hiking_hours < 0 ~ 0,
-                                          TRUE ~ anual_hiking_hours),
-           anual_hiking_hours = round(anual_hiking_hours)
+           hiking = case_when(hiking < 0 ~ 0,
+                                          TRUE ~ hiking),
+           hiking = round(hiking)
            )
 
-  tib <- tib[, c("id", names(tib)[-ncol(tib)])]
+
+  # Change order a bit
+
+  tib <- tib %>% select(id, sex, age, height, weight, income, education, confession, everything())
+
 
   tib
 }

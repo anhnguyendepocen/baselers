@@ -182,6 +182,11 @@ simulate_baselers <- function(nsim = 1000,
 
            income = round(income / 100, 0) * 100,
 
+           ## make 15% of cases NA
+
+           income = case_when(runif(nsim) < .15 ~ NA_real_,
+                              TRUE ~ income),
+
            children = case_when(children < 0 ~ runif(1, 0, 3),
                                    TRUE ~ children),
            children = round(children),

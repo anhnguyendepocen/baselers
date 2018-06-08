@@ -16,6 +16,8 @@
 #' @param seed integer. Is passed to set.seed, specify the same number to replicate
 #' results. If not provided, results will vary randomly.
 #'
+#' @export
+#'
 #' @return A tibble with nsim rows, containing continous and categorical simulated
 #' data of inhabitants of Basel.
 #' @import dplyr

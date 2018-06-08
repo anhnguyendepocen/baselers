@@ -32,17 +32,17 @@ simulate_baselers <- function(nsim = 1000,
   # weight, height: https://www.laenderdaten.info/durchschnittliche-koerpergroessen.php
   # tattoo: https://www.migrosmagazin.ch/tattoos-ohne-grenzen
   # household_income: https://www.srf.ch/news/schweiz/mit-7100-franken-pro-monat-ueberleben-oder-etwa-doch-weniger
-  # no_consultations: https://www.krankenkasse-vergleich.ch/news/das-schweizer-gesundheitssystem-in-der-oecd-statistik, https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.assetdetail.250255.html
+  # consultations: https://www.krankenkasse-vergleich.ch/news/das-schweizer-gesundheitssystem-in-der-oecd-statistik, https://www.bfs.admin.ch/bfs/de/home/statistiken/kataloge-datenbanken/tabellen.assetdetail.250255.html
 
   if (!is.null(seed) && is.numeric(seed)){
     set.seed(seed = seed)
   }
 
   # continuous variables:
-  # age, household_income (per month), weight (kg), height (cm), no_children,
+  # age, household_income (per month), weight (kg), height (cm), children,
   # happiness (0 to 10), fitness (0 to 10), food_expenses, alcohol_expenses, tattoos,
   # rhine_swimming (no per month), data_use (no of times phone is checked per day),
-  # no_consultations, anual_hiking_hours
+  # consultations, anual_hiking_hours
 
   # means and sds for females and males
   mu_f <- c(43.14, 7112, 64, 164, 1.54, 6, 5, 438, 25, 3, 4, 88, 4.5, 60)
@@ -109,15 +109,15 @@ simulate_baselers <- function(nsim = 1000,
 
 
   tib_f <- tibble::as_tibble(mat_f)
-  names(tib_f) <- c("age", "household_income", "weight", "height", "no_children",
+  names(tib_f) <- c("age", "household_income", "weight", "height", "children",
                     "happiness", "fitness", "food_expenses", "alcohol_expenses",
-                    "tattoos", "rhine_swimming", "data_use", "no_consultations",
+                    "tattoos", "rhine_swimming", "data_use", "consultations",
                     "anual_hiking_hours")
 
   tib_m <- tibble::as_tibble(mat_m)
-  names(tib_m) <- c("age", "household_income", "weight", "height", "no_children",
+  names(tib_m) <- c("age", "household_income", "weight", "height", "children",
                     "happiness", "fitness", "food_expenses", "alcohol_expenses",
-                    "tattoos", "rhine_swimming", "data_use", "no_consultations",
+                    "tattoos", "rhine_swimming", "data_use", "consultations",
                     "anual_hiking_hours")
 
   tib_f$sex <- "female"
@@ -176,9 +176,9 @@ simulate_baselers <- function(nsim = 1000,
 
            household_income = round(household_income / 100, 0) * 100,
 
-           no_children = case_when(no_children < 0 ~ runif(1, 0, 3),
-                                   TRUE ~ no_children),
-           no_children = round(no_children),
+           children = case_when(children < 0 ~ runif(1, 0, 3),
+                                   TRUE ~ children),
+           children = round(children),
            happiness = case_when(happiness > 10 ~ runif(1, 6, 9),
                                  happiness < 5 & runif(1, 0, 1) < .35 ~ runif(1, 6, 9),
                                  TRUE ~ happiness),
@@ -215,9 +215,9 @@ simulate_baselers <- function(nsim = 1000,
                                       TRUE ~ rhine_swimming),
            rhine_swimming = round(rhine_swimming),
            data_use = round(data_use),
-           no_consultations = case_when(no_consultations < 0 ~ runif(1, 0, 10),
-                                        TRUE ~ no_consultations),
-           no_consultations = round(no_consultations),
+           consultations = case_when(consultations < 0 ~ runif(1, 0, 10),
+                                        TRUE ~ consultations),
+           consultations = round(consultations),
            anual_hiking_hours = case_when(anual_hiking_hours < 0 ~ 0,
                                           TRUE ~ anual_hiking_hours),
            anual_hiking_hours = round(anual_hiking_hours)

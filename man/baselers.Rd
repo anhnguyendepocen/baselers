@@ -4,7 +4,7 @@
 \name{baselers}
 \alias{baselers}
 \title{baselers}
-\format{A tibble containing 150000 rows and 20 columns
+\format{A tibble containing 10,000 rows and 20 columns
 \describe{
   \item{id}{(numeric) - A unique identifier (1 through 150000).}
   \item{age}{(numeric) - A peson's age in years.}
@@ -28,7 +28,7 @@
   \item{eye_correction}{(character) - Whether a person needs eye correction. Levels are "yes" and "no".}
  }}
 \source{
-Simulated with the simulate_baselers function with nsim = 150000, and seed = 1
+Simulated with the simulate_baselers function with nsim = 10,000, and seed = 1
 }
 \usage{
 baselers

@@ -22,7 +22,9 @@
 #' data of inhabitants of Basel.
 #' @import dplyr
 #' @importFrom stats runif
-simulate_baselers <- function(nsim = 100, corMat_f = NULL, corMat_m = NULL,
+simulate_baselers <- function(nsim = 1000,
+                              corMat_f = NULL,
+                              corMat_m = NULL,
                               seed = NULL){
 
   # some sources:
@@ -44,47 +46,48 @@ simulate_baselers <- function(nsim = 100, corMat_f = NULL, corMat_m = NULL,
 
   # means and sds for females and males
   mu_f <- c(43.14, 7112, 64, 164, 1.54, 6, 5, 438, 25, 3, 4, 88, 4.5, 60)
-  # stddev_f <- c(20, 1200, 8, 10, 1.25, 2, 2, 80, 10, 2.8, 2.5, 20, 2, 20)
+  stddev_f <- c(20, 1200, 8, 10, 1.25, 2, 2, 80, 10, 2.8, 2.5, 20, 2, 20)
+  var_f <- stddev_f ^ 2
 
   mu_m <- c(41.01, 7112, 84.9, 178, 1.54, 6, 5, 438, 40, 3.8, 4, 88, 3, 60)
-  # stddev_m <- c(20, 1200, 12, 11, 1.25, 2, 2, 80, 15, 2.8, 2.5, 20, 1.5, 25)
-
+  stddev_m <- c(20, 1200, 12, 11, 1.25, 2, 2, 80, 15, 2.8, 2.5, 20, 1.5, 25)
+  var_m <- stddev_m ^ 2
 
   if (is.null(corMat_f)){
     # correlation matrix females
-    corMat_f <- matrix(c(   1,   .3,  -.1, -.15,   .2,   .1, -.25,  -.1,    0, -.45, -.15, -.23,   .5,    0,
-                           .3,    1,    0,    0,  -.1,  .15,    0,   .5,   .2, -.08,    0,    0, -.05,    0,
-                          -.1,    0,    1,   .6,    0,    0,  -.3,    0,  .15,    0,    0,    0,  .15, -.15,
-                         -.15,    0,   .6,    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                           .2,  -.1,    0,    0,    1,    0,    0,   .4,    0,    0,  -.1,    0,    0,    0,
-                           .1,  .15,    0,    0,    0,    1,  .15,   .1,    0,    0,   .2,  -.3, -.15,  .25,
-                         -.25,    0,  -.3,    0,    0,  .15,    1,    0, -.05,  .15,   .2,    0,  -.1,   .3,
-                          -.1,   .5,    0,    0,   .4,   .1,    0,    1,    0,    0,    0,    0,    0,    0,
-                            0,   .2,  .15,    0,    0,    0, -.05,    0,    1,    0,    0,    0,  .15,    0,
-                         -.45, -.08,    0,    0,    0,    0,  .15,    0,    0,    1,    0,    0,    0,    0,
-                         -.15,    0,    0,    0,  -.1,   .2,   .2,    0,    0,    0,    1,    0,    0,   .1,
-                         -.23,    0,    0,    0,    0,  -.3,    0,    0,    0,    0,    0,    1,    0,    0,
-                           .5, -.05,  .15,    0,    0, -.15,  -.1,    0,  .15,    0,    0,    0,    1, -.15,
-                            0,    0, -.15,    0,    0,  .25,   .3,    0,    0,    0,   .1,    0, -.15,    1),
+    corMat_f <- matrix(c(   var_f[1],   .3,  -.1, -.15,   .2,   .1, -.25,  -.1,    0, -.45, -.15, -.23,   .5,    0,
+                           .3,    var_f[2],    0,    0,  -.1,  .15,    0,   .5,   .2, -.08,    0,    0, -.05,    0,
+                          -.1,    0,    var_f[3],   .6,    0,    0,  -.3,    0,  .15,    0,    0,    0,  .15, -.15,
+                         -.15,    0,   .6,    var_f[4],    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                           .2,  -.1,    0,    0,    var_f[5],    0,    0,   .4,    0,    0,  -.1,    0,    0,    0,
+                           .1,  .15,    0,    0,    0,    var_f[6],  .15,   .1,    0,    0,   .2,  -.3, -.15,  .25,
+                         -.25,    0,  -.3,    0,    0,  .15,    var_f[7],    0, -.05,  .15,   .2,    0,  -.1,   .3,
+                          -.1,   .5,    0,    0,   .4,   .1,    0,    var_f[8],    0,    0,    0,    0,    0,    0,
+                            0,   .2,  .15,    0,    0,    0, -.05,    0,    var_f[9],    0,    0,    0,  .15,    0,
+                         -.45, -.08,    0,    0,    0,    0,  .15,    0,    0,    var_f[10],    0,    0,    0,    0,
+                         -.15,    0,    0,    0,  -.1,   .2,   .2,    0,    0,    0,    var_f[11],    0,    0,   .1,
+                         -.23,    0,    0,    0,    0,  -.3,    0,    0,    0,    0,    0,    var_f[12],    0,    0,
+                           .5, -.05,  .15,    0,    0, -.15,  -.1,    0,  .15,    0,    0,    0,    var_f[13], -.15,
+                            0,    0, -.15,    0,    0,  .25,   .3,    0,    0,    0,   .1,    0, -.15,    var_f[14]),
                      ncol = 14)
   }
 
   if (is.null(corMat_m)){
     # correlation matrix for males
-    corMat_m <- matrix(c(   1,   .3,  -.1, -.15,   .2,   .1, -.25,  -.1,    0, -.25, -.15, -.23,   .5,    0,
-                           .3,    1,    0,    0,  -.1,  .15,    0,   .5,   .2, -.08,    0,    0, -.05,    0,
-                          -.1,    0,    1,   .6,    0,    0,  -.3,    0,  .15,    0,    0,    0,  .15, -.15,
-                         -.15,    0,   .6,    1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-                           .2,  -.1,    0,    0,    1,    0,    0,   .4,    0,    0,  -.1,    0,    0,    0,
-                           .1,  .15,    0,    0,    0,    1,  .15,   .1,    0,    0,   .2,  -.3, -.15,  .25,
-                         -.25,    0,  -.3,    0,    0,  .15,    1,    0, -.05,  .15,   .2,    0,  -.1,   .3,
-                          -.1,   .5,    0,    0,   .4,   .1,    0,    1,    0,    0,    0,    0,    0,    0,
-                            0,   .2,  .15,    0,    0,    0, -.05,    0,    1,    0,    0,    0,  .15,    0,
-                         -.25, -.08,    0,    0,    0,    0,  .15,    0,    0,    1,    0,    0,    0,    0,
-                         -.15,    0,    0,    0,  -.1,   .2,   .2,    0,    0,    0,    1,    0,    0,   .1,
-                         -.23,    0,    0,    0,    0,  -.3,    0,    0,    0,    0,    0,    1,    0,    0,
-                           .5, -.05,  .15,    0,    0, -.15,  -.1,    0,  .15,    0,    0,    0,    1, -.15,
-                            0,    0, -.15,    0,    0,  .25,   .3,    0,    0,    0,   .1,    0, -.15,    1),
+    corMat_m <- matrix(c(   var_m[1],   .3,  -.1, -.15,   .2,   .1, -.25,  -.1,    0, -.25, -.15, -.23,   .5,    0,
+                           .3,    var_m[2],    0,    0,  -.1,  .15,    0,   .5,   .2, -.08,    0,    0, -.05,    0,
+                          -.1,    0,    var_m[3],   .6,    0,    0,  -.3,    0,  .15,    0,    0,    0,  .15, -.15,
+                         -.15,    0,   .6,    var_m[4],    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+                           .2,  -.1,    0,    0,    var_m[5],    0,    0,   .4,    0,    0,  -.1,    0,    0,    0,
+                           .1,  .15,    0,    0,    0,    var_m[6],  .15,   .1,    0,    0,   .2,  -.3, -.15,  .25,
+                         -.25,    0,  -.3,    0,    0,  .15,    var_m[7],    0, -.05,  .15,   .2,    0,  -.1,   .3,
+                          -.1,   .5,    0,    0,   .4,   .1,    0,    var_m[8],    0,    0,    0,    0,    0,    0,
+                            0,   .2,  .15,    0,    0,    0, -.05,    0,    var_m[9],    0,    0,    0,  .15,    0,
+                         -.25, -.08,    0,    0,    0,    0,  .15,    0,    0,    var_m[10],    0,    0,    0,    0,
+                         -.15,    0,    0,    0,  -.1,   .2,   .2,    0,    0,    0,    var_m[11],    0,    0,   .1,
+                         -.23,    0,    0,    0,    0,  -.3,    0,    0,    0,    0,    0,    var_m[12],    0,    0,
+                           .5, -.05,  .15,    0,    0, -.15,  -.1,    0,  .15,    0,    0,    0,    var_m[13], -.15,
+                            0,    0, -.15,    0,    0,  .25,   .3,    0,    0,    0,   .1,    0, -.15,    var_m[14]),
                        ncol = 14)
   }
 
@@ -153,16 +156,26 @@ simulate_baselers <- function(nsim = 100, corMat_f = NULL, corMat_m = NULL,
   tib$alcohol_expenses <- tib$alcohol_expenses + ifelse(tib$fasnacht_active == "yes",
                                                         runif(1, 0:40), 0)
 
-  tib$eye_correction <- sample(c("yes", "no"), size = nrow(tib), replace = TRUE,
+  tib$eye_correction <- sample(c("yes", "no"), size = nsim, replace = TRUE,
                                prob = c(.66, .37))
 
-  tib <- tib[sample(1:nrow(tib)),]
+  tib <- tib[sample(1:nsim),]
+
+
+  id_scramble <- paste0("bas_", sapply(1:nsim, FUN = function(x) {paste(sample(LETTERS, size = 5, replace = TRUE), collapse = "")}))
 
   tib <- tib %>%
-    mutate(id = 1:nrow(tib),
+    mutate(id = id_scramble,
            age = case_when(age < 18 | age > 105 ~ runif(1, 18, 85),
                            TRUE ~ age),
-           age = round(age, 2),
+           age = round(age, 1),
+
+
+           weight = round(weight, 1),
+           height = round(height, 1),
+
+           household_income = round(household_income / 100, 0) * 100,
+
            no_children = case_when(no_children < 0 ~ runif(1, 0, 3),
                                    TRUE ~ no_children),
            no_children = round(no_children),
@@ -174,12 +187,30 @@ simulate_baselers <- function(nsim = 100, corMat_f = NULL, corMat_m = NULL,
                                TRUE ~ fitness),
            fitness = round(fitness),
            food_expenses = round(food_expenses),
+
+           ### alcohol
+
            alcohol_expenses = case_when(alcohol_expenses < 0 ~ runif(1, 5, 50),
                                         TRUE ~ alcohol_expenses),
            alcohol_expenses = round(alcohol_expenses),
+
+           ## make 15% of cases 0
+
+           alcohol_expenses = case_when(runif(nsim) < .15 ~ 0,
+                               TRUE ~ alcohol_expenses),
+
+           ## Tattoos
+
            tattoos = case_when(tattoos < 0 ~ 0,
                                TRUE ~ tattoos),
            tattoos = round(tattoos),
+
+           ## make 50% of cases 0
+
+           tattoos = case_when(runif(nsim) < .5 ~ 0,
+                               TRUE ~ tattoos),
+
+
            rhine_swimming = case_when(rhine_swimming < 0 ~ 0,
                                       TRUE ~ rhine_swimming),
            rhine_swimming = round(rhine_swimming),

@@ -4,7 +4,7 @@
 \alias{simulate_baselers}
 \title{Simulate baselers dataset}
 \usage{
-simulate_baselers(nsim = 100, corMat_f = NULL, corMat_m = NULL,
+simulate_baselers(nsim = 1000, corMat_f = NULL, corMat_m = NULL,
   seed = NULL)
 }
 \arguments{

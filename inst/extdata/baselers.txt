@@ -1,4 +1,4 @@
-id,age,household_income,weight,height,no_children,happiness,fitness,food_expenses,alcohol_expenses,tattoos,rhine_swimming,data_use,no_consultations,anual_hiking_hours,sex,education,confession,fasnacht_active,eye_correction
+id,age,household_income,weight,height,children,happiness,fitness,food_expenses,alcohol_expenses,tattoos,rhine_swimming,data_use,consultations,anual_hiking_hours,sex,education,confession,fasnacht_active,eye_correction
 bas_ERZUT,44.2,5900,113.4,174.3,1,5,3,359,40,6,4,69,4,29,male,SEK_III,catholic,no,yes
 bas_AILRI,64.6,7300,75.2,180.3,1,7,8,461,24,5,2,89,3,56,male,obligatory_school,confessionless,no,no
 bas_LPNLR,66.1,6600,55.5,168.3,1,7,6,502,14,3,6,102,7,57,female,SEK_III,evangelical-reformed,no,yes

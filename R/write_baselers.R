@@ -1,12 +1,10 @@
 #' write baselers data to file
 #'
-#' @param nsim
-#' @param seed
+#' @param nsim number of simulations
+#' @param seed seed
 #'
-#' @return
 #' @export
 #'
-#' @examples
 write_baselers <- function(nsim = 10000, seed = 1) {
 
   baselers <- simulate_baselers(nsim = nsim, seed = seed)

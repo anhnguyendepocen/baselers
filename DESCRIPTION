@@ -13,5 +13,6 @@ LazyData: TRUE
 Imports: dplyr,
     MASS,
     tibble,
-    corpcor
+    corpcor,
+    readr
 RoxygenNote: 6.0.1

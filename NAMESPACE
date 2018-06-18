@@ -3,4 +3,5 @@
 export(simulate_baselers)
 export(write_baselers)
 import(dplyr)
+importFrom(readr,write_csv)
 importFrom(stats,runif)

@@ -207,7 +207,8 @@ simulate_baselers <- function(nsim = 1000,
 
            ### income
 
-           income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + rnorm(nsim, mean = 0, sd = 100),
+           # as a function of happiness, height, fitness, tattoos
+           income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + rnorm(nsim, mean = 0, sd = 200),
 
            income = round(income / 100, 0) * 100,
 

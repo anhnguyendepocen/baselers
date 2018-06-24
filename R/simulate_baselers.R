@@ -207,10 +207,13 @@ simulate_baselers <- function(nsim = 1000,
 
            ### income
 
-           # as a function of happiness, height, fitness, tattoos
-           income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + rnorm(nsim, mean = 0, sd = 200),
+           # as a function of happiness, height, fitness, tattoos age
+           income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + 150 * age + rnorm(nsim, mean = -150 * 40, sd = 200),
 
            income = round(income / 100, 0) * 100,
+
+           income = case_when(income < 1000 ~ runif(1, 1000, 10000),
+                               TRUE ~ income),
 
            ### alcohol
 

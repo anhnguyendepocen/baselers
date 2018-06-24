@@ -183,7 +183,6 @@ simulate_baselers <- function(nsim = 1000,
            weight = case_when(runif(nsim) < .15 ~ NA_real_,
                                TRUE ~ weight),
 
-           income = round(income / 100, 0) * 100,
 
            ## make 15% of cases NA
 
@@ -204,6 +203,14 @@ simulate_baselers <- function(nsim = 1000,
                                TRUE ~ fitness),
            fitness = round(fitness),
            food = round(food / 10) * 10,
+
+
+           ### income
+
+           income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + rnorm(nsim, mean = 0, sd = 100),
+
+           income = round(income / 100, 0) * 100,
+
 
            ### alcohol
 

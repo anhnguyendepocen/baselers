@@ -202,7 +202,7 @@ simulate_baselers <- function(nsim = 1000,
            fitness = case_when(fitness < 1 | fitness > 10 ~ runif(1, 1, 10),
                                TRUE ~ fitness),
            fitness = round(fitness),
-           food = round(food / 10) * 10,
+
 
 
            ### income
@@ -211,7 +211,6 @@ simulate_baselers <- function(nsim = 1000,
            income = income + -100 * happiness + 2 * height + 50 * fitness - 50 * tattoos + rnorm(nsim, mean = 0, sd = 200),
 
            income = round(income / 100, 0) * 100,
-
 
            ### alcohol
 
@@ -223,6 +222,13 @@ simulate_baselers <- function(nsim = 1000,
 
            alcohol = case_when(runif(nsim) < .15 ~ 0,
                                TRUE ~ alcohol),
+
+
+           ## Food as a function of happiness income and alcohol
+
+           food = 50 * happiness + .1 * income + -10 * alcohol + rnorm(nsim, mean = 0, sd = 200),
+
+           food = round(food / 10) * 10,
 
            ## Tattoos
 
